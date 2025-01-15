@@ -12,7 +12,48 @@ frame.Size = UDim2.new(0, 300, 0, 500)
 frame.Position = UDim2.new(0.5, -150, 0.5, -250)
 frame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
 frame.BorderSizePixel = 0
+frame.ClipsDescendants = true
 frame.Parent = screenGui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 12)
+corner.Parent = frame
+
+local stroke = Instance.new("UIStroke")
+stroke.Color = Color3.new(0.4, 0.4, 0.4)
+stroke.Thickness = 2
+stroke.Parent = frame
+
+local dragInput, dragStart, startPos
+
+local function update(input)
+    local delta = input.Position - dragStart
+    frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+
+frame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragStart = input.Position
+        startPos = frame.Position
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragInput = nil
+            end
+        end)
+    end
+end)
+
+frame.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        dragInput = input
+    end
+end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+    if input == dragInput then
+        update(input)
+    end
+end)
 
 local closeButton = Instance.new("TextButton")
 closeButton.Text = "X"
@@ -23,6 +64,10 @@ closeButton.TextColor3 = Color3.new(1, 1, 1)
 closeButton.Font = Enum.Font.SourceSansBold
 closeButton.TextSize = 18
 closeButton.Parent = frame
+
+local closeCorner = Instance.new("UICorner")
+closeCorner.CornerRadius = UDim.new(0, 12)
+closeCorner.Parent = closeButton
 
 closeButton.MouseButton1Click:Connect(function()
     screenGui:Destroy()
@@ -53,6 +98,10 @@ local function createInputField(parent, labelText, positionY)
     textBox.TextColor3 = Color3.new(0, 0, 0)
     textBox.Parent = parent
 
+    local textBoxCorner = Instance.new("UICorner")
+    textBoxCorner.CornerRadius = UDim.new(0, 8)
+    textBoxCorner.Parent = textBox
+
     return textBox
 end
 
@@ -78,6 +127,10 @@ local function createToggleButton(parent, labelText, positionY)
     toggleButton.TextSize = 14
     toggleButton.AutoButtonColor = false
     toggleButton.Parent = parent
+
+    local toggleCorner = Instance.new("UICorner")
+    toggleCorner.CornerRadius = UDim.new(0, 8)
+    toggleCorner.Parent = toggleButton
 
     local isToggled = false
 
@@ -106,6 +159,10 @@ modelScroll.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
 modelScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
 modelScroll.Parent = frame
 
+local modelScrollCorner = Instance.new("UICorner")
+modelScrollCorner.CornerRadius = UDim.new(0, 8)
+modelScrollCorner.Parent = modelScroll
+
 local modelList = {
     "Animatronic_Bear", "Banana_Man", "Batguy", "Bear", "Blue_Glow_Spirit", "Coconut_Warrior", "Corrupted_Spider", "Crab_Man", "Crimson_Dragon", "Cyber_Diver", "Cyborg_Bunny", "Cyborg_Deer", "Dark_Cyborg", "Dark_King", "Dark_Lion", "Dark_Wizard", "Death_Pool", "Diver", "Dog", "Earth_Beast", "Earth_Mage", "Emerald_Night_Raider", "Evil_Robot", "Fire_Night_Raider", "Fire_Wizard", "Fish_Man", "Ghost_Glow_Spirit", "Ghost_Raider", "Goka", "Gold_King", "Golden_Warrior", "Green_CyberBOT", "Hell_Hound", "Homesander", "Ice_Beast", "Ice_Bird", "Ice_Deer", "Ice_Night_Raider", "Ice_Queen", "Ice_Wizard", "Ichistop", "Jewel_Warrior", "KSY", "King_CyberBOT", "Lava_Bear", "Lava_Deer", "Lava_Monster", "Logan_Raul", "Luffi", "Mouse", "Mutant_Beast", "Mutant_Dog", "Mutant_Lizard", "Narotu", "Neon_Raider", "Neon_Volcano_Beast", "Nuclear_Monster", "OMG", "Octoguy", "Owl_Warrior", "Pink_CyberBOT", "Pink_Soldier", "Poison_Bunny", "Poison_Deer", "Poison_Lion", "Poison_Pig", "Polar_Bear", "Princess", "Pro_Future_Warrior", "Purple_Future_Warrior", "Purple_Volcano_Beast", "Queen", "Red_Future_Warrior", "Red_Glow_Spirit", "Rock_Expert", "Sand_Dragon", "Sand_Man", "Shark_Man", "Sir_Beast", "Skeleton_General", "Snow_Bird", "Snow_Deer", "Soldier", "SpiderWeb_Man", "Tactical_Soldier", "The_CamMan", "Volcano_Beast"
 }
@@ -131,6 +188,10 @@ local function populateModelScroll()
         modelButton.TextSize = 14
         modelButton.Parent = modelScroll
 
+        local modelButtonCorner = Instance.new("UICorner")
+        modelButtonCorner.CornerRadius = UDim.new(0, 8)
+        modelButtonCorner.Parent = modelButton
+
         modelButton.MouseButton1Click:Connect(function()
             selectedModel = modelName
             currentModelLabel.Text = "Model: " .. selectedModel
@@ -147,6 +208,10 @@ rarityScroll.Position = UDim2.new(0, 150, 0, 210)
 rarityScroll.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
 rarityScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
 rarityScroll.Parent = frame
+
+local rarityScrollCorner = Instance.new("UICorner")
+rarityScrollCorner.CornerRadius = UDim.new(0, 8)
+rarityScrollCorner.Parent = rarityScroll
 
 local rarityList = {"Common", "Uncommon", "Rare", "Legendary", "Epic", "Exclusive"}
 
@@ -171,6 +236,10 @@ local function populateRarityScroll()
         rarityButton.TextSize = 14
         rarityButton.Parent = rarityScroll
 
+        local rarityButtonCorner = Instance.new("UICorner")
+        rarityButtonCorner.CornerRadius = UDim.new(0, 8)
+        rarityButtonCorner.Parent = rarityButton
+
         rarityButton.MouseButton1Click:Connect(function()
             selectedRarity = rarityName
             currentRarityLabel.Text = "Rarity: " .. selectedRarity
@@ -190,6 +259,10 @@ applyButton.TextColor3 = Color3.new(1, 1, 1)
 applyButton.Font = Enum.Font.SourceSans
 applyButton.TextSize = 18
 applyButton.Parent = frame
+
+local applyButtonCorner = Instance.new("UICorner")
+applyButtonCorner.CornerRadius = UDim.new(0, 8)
+applyButtonCorner.Parent = applyButton
 
 applyButton.MouseButton1Click:Connect(function()
     local randomUUID = tostring(math.random(100000, 999999))

@@ -8,16 +8,30 @@ local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = playerGui
 
 local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 300, 0, 500) -- Размер фона
+frame.Size = UDim2.new(0, 300, 0, 500)
 frame.Position = UDim2.new(0.5, -150, 0.5, -250)
 frame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
 frame.BorderSizePixel = 0
 frame.Parent = screenGui
 
+local closeButton = Instance.new("TextButton")
+closeButton.Text = "X"
+closeButton.Size = UDim2.new(0, 30, 0, 30)
+closeButton.Position = UDim2.new(1, -35, 0, 5)
+closeButton.BackgroundColor3 = Color3.new(0.8, 0.2, 0.2)
+closeButton.TextColor3 = Color3.new(1, 1, 1)
+closeButton.Font = Enum.Font.SourceSansBold
+closeButton.TextSize = 18
+closeButton.Parent = frame
+
+closeButton.MouseButton1Click:Connect(function()
+    screenGui:Destroy()
+end)
+
 local title = Instance.new("TextLabel")
 title.Text = "Pet Editor"
 title.Size = UDim2.new(1, 0, 0, 40)
-title.Position = UDim2.new(0, 0, 0, 5)
+title.Position = UDim2.new(0, 0, 0, 10)
 title.TextColor3 = Color3.new(1, 1, 1)
 title.Font = Enum.Font.SourceSansBold
 title.TextSize = 24
@@ -57,7 +71,7 @@ local function createToggleButton(parent, labelText, positionY)
     local toggleButton = Instance.new("TextButton")
     toggleButton.Position = UDim2.new(0, 120, 0, positionY)
     toggleButton.Size = UDim2.new(0, 50, 0, 20)
-    toggleButton.BackgroundColor3 = Color3.new(1, 0, 0) -- Красный = false
+    toggleButton.BackgroundColor3 = Color3.new(1, 0, 0)
     toggleButton.Text = "Off"
     toggleButton.TextColor3 = Color3.new(1, 1, 1)
     toggleButton.Font = Enum.Font.SourceSans
@@ -70,10 +84,10 @@ local function createToggleButton(parent, labelText, positionY)
     toggleButton.MouseButton1Click:Connect(function()
         isToggled = not isToggled
         if isToggled then
-            toggleButton.BackgroundColor3 = Color3.new(0, 1, 0) -- Зеленый = true
+            toggleButton.BackgroundColor3 = Color3.new(0, 1, 0)
             toggleButton.Text = "On"
         else
-            toggleButton.BackgroundColor3 = Color3.new(1, 0, 0) -- Красный = false
+            toggleButton.BackgroundColor3 = Color3.new(1, 0, 0)
             toggleButton.Text = "Off"
         end
     end)
@@ -96,7 +110,7 @@ local modelList = {
     "Animatronic_Bear", "Banana_Man", "Batguy", "Bear", "Blue_Glow_Spirit", "Coconut_Warrior", "Corrupted_Spider", "Crab_Man", "Crimson_Dragon", "Cyber_Diver", "Cyborg_Bunny", "Cyborg_Deer", "Dark_Cyborg", "Dark_King", "Dark_Lion", "Dark_Wizard", "Death_Pool", "Diver", "Dog", "Earth_Beast", "Earth_Mage", "Emerald_Night_Raider", "Evil_Robot", "Fire_Night_Raider", "Fire_Wizard", "Fish_Man", "Ghost_Glow_Spirit", "Ghost_Raider", "Goka", "Gold_King", "Golden_Warrior", "Green_CyberBOT", "Hell_Hound", "Homesander", "Ice_Beast", "Ice_Bird", "Ice_Deer", "Ice_Night_Raider", "Ice_Queen", "Ice_Wizard", "Ichistop", "Jewel_Warrior", "KSY", "King_CyberBOT", "Lava_Bear", "Lava_Deer", "Lava_Monster", "Logan_Raul", "Luffi", "Mouse", "Mutant_Beast", "Mutant_Dog", "Mutant_Lizard", "Narotu", "Neon_Raider", "Neon_Volcano_Beast", "Nuclear_Monster", "OMG", "Octoguy", "Owl_Warrior", "Pink_CyberBOT", "Pink_Soldier", "Poison_Bunny", "Poison_Deer", "Poison_Lion", "Poison_Pig", "Polar_Bear", "Princess", "Pro_Future_Warrior", "Purple_Future_Warrior", "Purple_Volcano_Beast", "Queen", "Red_Future_Warrior", "Red_Glow_Spirit", "Rock_Expert", "Sand_Dragon", "Sand_Man", "Shark_Man", "Sir_Beast", "Skeleton_General", "Snow_Bird", "Snow_Deer", "Soldier", "SpiderWeb_Man", "Tactical_Soldier", "The_CamMan", "Volcano_Beast"
 }
 
-local selectedModel = "Crimson_Dragon" -- По умолчанию
+local selectedModel = "Crimson_Dragon"
 
 local currentModelLabel = Instance.new("TextLabel")
 currentModelLabel.Text = "Model: " .. selectedModel
@@ -119,7 +133,7 @@ local function populateModelScroll()
 
         modelButton.MouseButton1Click:Connect(function()
             selectedModel = modelName
-            currentModelLabel.Text = "Model: " .. selectedModel -- Динамическое обновление
+            currentModelLabel.Text = "Model: " .. selectedModel
         end)
     end
     modelScroll.CanvasSize = UDim2.new(0, 0, 0, #modelList * 25)
@@ -136,7 +150,7 @@ rarityScroll.Parent = frame
 
 local rarityList = {"Common", "Uncommon", "Rare", "Legendary", "Epic", "Exclusive"}
 
-local selectedRarity = "Exclusive" -- По умолчанию
+local selectedRarity = "Exclusive"
 
 local currentRarityLabel = Instance.new("TextLabel")
 currentRarityLabel.Text = "Rarity: " .. selectedRarity
@@ -159,7 +173,7 @@ local function populateRarityScroll()
 
         rarityButton.MouseButton1Click:Connect(function()
             selectedRarity = rarityName
-            currentRarityLabel.Text = "Rarity: " .. selectedRarity -- Динамическое обновление
+            currentRarityLabel.Text = "Rarity: " .. selectedRarity
         end)
     end
     rarityScroll.CanvasSize = UDim2.new(0, 0, 0, #rarityList * 25)
@@ -178,12 +192,11 @@ applyButton.TextSize = 18
 applyButton.Parent = frame
 
 applyButton.MouseButton1Click:Connect(function()
-    -- Random UUID
-    local randomUUID = tostring(math.random(100000, 999999)) -- Генерация случайного числа от 100000 до 999999
+    local randomUUID = tostring(math.random(100000, 999999))
 
     local args = {
         [1] = {
-            ["UUID"] = randomUUID, -- Используем случайный UUID
+            ["UUID"] = randomUUID,
             ["Rarity"] = selectedRarity,
             ["Enchantment"] = {},
             ["Huge"] = getHugeState(),

@@ -76,7 +76,7 @@ end)
 local title = Instance.new("TextLabel")
 title.Text = "Pet Editor"
 title.Size = UDim2.new(1, 0, 0, 40)
-title.Position = UDim2.new(0, 0, 0, 10)
+title.Position = UDim2.new(0, 0, 0, 5)
 title.TextColor3 = Color3.new(1, 1, 1)
 title.Font = Enum.Font.SourceSansBold
 title.TextSize = 24
@@ -167,7 +167,7 @@ local modelList = {
     "Animatronic_Bear", "Banana_Man", "Batguy", "Bear", "Blue_Glow_Spirit", "Coconut_Warrior", "Corrupted_Spider", "Crab_Man", "Crimson_Dragon", "Cyber_Diver", "Cyborg_Bunny", "Cyborg_Deer", "Dark_Cyborg", "Dark_King", "Dark_Lion", "Dark_Wizard", "Death_Pool", "Diver", "Dog", "Earth_Beast", "Earth_Mage", "Emerald_Night_Raider", "Evil_Robot", "Fire_Night_Raider", "Fire_Wizard", "Fish_Man", "Ghost_Glow_Spirit", "Ghost_Raider", "Goka", "Gold_King", "Golden_Warrior", "Green_CyberBOT", "Hell_Hound", "Homesander", "Ice_Beast", "Ice_Bird", "Ice_Deer", "Ice_Night_Raider", "Ice_Queen", "Ice_Wizard", "Ichistop", "Jewel_Warrior", "KSY", "King_CyberBOT", "Lava_Bear", "Lava_Deer", "Lava_Monster", "Logan_Raul", "Luffi", "Mouse", "Mutant_Beast", "Mutant_Dog", "Mutant_Lizard", "Narotu", "Neon_Raider", "Neon_Volcano_Beast", "Nuclear_Monster", "OMG", "Octoguy", "Owl_Warrior", "Pink_CyberBOT", "Pink_Soldier", "Poison_Bunny", "Poison_Deer", "Poison_Lion", "Poison_Pig", "Polar_Bear", "Princess", "Pro_Future_Warrior", "Purple_Future_Warrior", "Purple_Volcano_Beast", "Queen", "Red_Future_Warrior", "Red_Glow_Spirit", "Rock_Expert", "Sand_Dragon", "Sand_Man", "Shark_Man", "Sir_Beast", "Skeleton_General", "Snow_Bird", "Snow_Deer", "Soldier", "SpiderWeb_Man", "Tactical_Soldier", "The_CamMan", "Volcano_Beast"
 }
 
-local selectedModel = "Crimson_Dragon"
+local selectedModel = "Dog"
 
 local currentModelLabel = Instance.new("TextLabel")
 currentModelLabel.Text = "Model: " .. selectedModel
@@ -215,7 +215,7 @@ rarityScrollCorner.Parent = rarityScroll
 
 local rarityList = {"Common", "Uncommon", "Rare", "Legendary", "Epic", "Exclusive"}
 
-local selectedRarity = "Exclusive"
+local selectedRarity = "Common"
 
 local currentRarityLabel = Instance.new("TextLabel")
 currentRarityLabel.Text = "Rarity: " .. selectedRarity
